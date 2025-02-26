@@ -113,7 +113,7 @@ export function ReferModal({ open, onOpenChange }: ReferModalProps) {
             </p>
           </div>
         ) : (
-          <Form {...form}>
+          <Form form={form} onSubmit={onSubmit}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <div className="space-y-4">
                 <h4 className="text-sm font-semibold">Your Details</h4>
