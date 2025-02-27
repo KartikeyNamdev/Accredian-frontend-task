@@ -1,12 +1,30 @@
-// components/ui/accordion/accordion.tsx
 import * as React from "react";
 
 // Accordion Root Component
 interface AccordionProps extends React.HTMLAttributes<HTMLDivElement> {
   type?: "single" | "multiple";
-  collapsible?: boolean;
   defaultValue?: string | string[];
   children: React.ReactNode;
+}
+
+// Define our own custom props without extending HTMLAttributes
+interface AccordionItemCustomProps {
+  value: string;
+  openItems?: string | string[];
+  onToggle?: (value: string) => void;
+}
+
+// Combine our custom props with div element props
+interface AccordionItemProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onToggle">,
+    AccordionItemCustomProps {
+  children: React.ReactNode;
+}
+
+// Define a common interface for components that can receive isOpen and onToggle
+interface AccordionChildProps {
+  isOpen?: boolean;
+  onToggle?: () => void;
 }
 
 const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
@@ -31,12 +49,15 @@ const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
 
     return (
       <div ref={ref} {...props}>
-        {React.Children.map(children, (child) =>
-          React.cloneElement(child as React.ReactElement, {
-            openItems,
-            onToggle: handleToggle,
-          })
-        )}
+        {React.Children.map(children, (child) => {
+          if (React.isValidElement(child)) {
+            return React.cloneElement(child, {
+              openItems,
+              onToggle: handleToggle,
+            } as React.JSX.IntrinsicAttributes);
+          }
+          return child;
+        })}
       </div>
     );
   }
@@ -45,13 +66,6 @@ const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
 Accordion.displayName = "Accordion";
 
 // AccordionItem Component
-interface AccordionItemProps extends React.HTMLAttributes<HTMLDivElement> {
-  value: string;
-  openItems?: string | string[];
-  onToggle?: (value: string) => void;
-  children: React.ReactNode;
-}
-
 const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps>(
   ({ value, openItems, onToggle, children, ...props }, ref) => {
     const isOpen = Array.isArray(openItems)
@@ -60,12 +74,15 @@ const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps>(
 
     return (
       <div ref={ref} className="border-b" {...props}>
-        {React.Children.map(children, (child) =>
-          React.cloneElement(child as React.ReactElement, {
-            isOpen,
-            onToggle: () => onToggle?.(value),
-          })
-        )}
+        {React.Children.map(children, (child) => {
+          if (React.isValidElement(child)) {
+            return React.cloneElement(child, {
+              isOpen,
+              onToggle: () => onToggle?.(value),
+            } as React.JSX.IntrinsicAttributes);
+          }
+          return child;
+        })}
       </div>
     );
   }
@@ -75,9 +92,8 @@ AccordionItem.displayName = "AccordionItem";
 
 // AccordionTrigger Component
 interface AccordionTriggerProps
-  extends React.HTMLAttributes<HTMLButtonElement> {
-  isOpen?: boolean;
-  onToggle?: () => void;
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onToggle">,
+    AccordionChildProps {
   children: React.ReactNode;
 }
 
@@ -116,8 +132,9 @@ const AccordionTrigger = React.forwardRef<
 AccordionTrigger.displayName = "AccordionTrigger";
 
 // AccordionContent Component
-interface AccordionContentProps extends React.HTMLAttributes<HTMLDivElement> {
-  isOpen?: boolean;
+interface AccordionContentProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onToggle">,
+    AccordionChildProps {
   children: React.ReactNode;
 }
 

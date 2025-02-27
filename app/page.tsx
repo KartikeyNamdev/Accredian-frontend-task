@@ -3,18 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/app/components/ui/button";
+import Button from "./components/ui/button";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "./components/ui/accordian";
-import { ReferModal } from "./components/refer-modal";
+import FormDialog from "./components/ui/dialog";
 
 export default function ReferEarn() {
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  // const [isModalOpen, setIsModalOpen] = useState(true);
 
   return (
     <div className="min-h-screen bg-white">
@@ -40,9 +39,7 @@ export default function ReferEarn() {
               <Link href="/support" className="text-primary">
                 Support
               </Link>
-              <button className="bg-primary text-white py-2 px-4 rounded">
-                Sign in
-              </button>
+              <FormDialog />
             </div>
           </div>
         </div>
@@ -53,14 +50,12 @@ export default function ReferEarn() {
           <div className="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
             <div className="mb-8 lg:mb-0">
               <h1 className="text-4xl text-gray-900 font-bold mb-4">
-                Let's Learn & Earn
+                Let us Learn & Earn
               </h1>
               <p className="text-lg mb-6 text-gray-700">
                 Get a chance to earn up to ₹ 15,000
               </p>
-              <button className="bg-primary text-white py-2 px-4 rounded">
-                Refer now
-              </button>
+              <FormDialog />
             </div>
             <div>
               <Image
@@ -192,11 +187,7 @@ export default function ReferEarn() {
           <h2 className="text-2xl font-semibold text-gray-500 text-center mb-8">
             Frequently Asked <span className="text-primary">Questions</span>
           </h2>
-          <Accordion
-            type="single"
-            collapsible
-            className="text-gray-500 max-w-2xl mx-auto"
-          >
+          <Accordion type="single" className="text-gray-500 max-w-2xl mx-auto">
             <AccordionItem value="item-1">
               <AccordionTrigger>
                 Do I need to have prior Product Management and Project
@@ -204,8 +195,8 @@ export default function ReferEarn() {
               </AccordionTrigger>
               <AccordionContent>
                 The program is designed to cater to a wide range of experience
-                levels. Whether you're a beginner or have some experience, the
-                program will provide valuable insights and skills.
+                levels. Whether you&aposre a beginner or have some experience,
+                the program will provide valuable insights and skills.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
@@ -234,11 +225,7 @@ export default function ReferEarn() {
                 counselors!
               </p>
             </div>
-            <Button
-              variant="secondary"
-              size="lg"
-              className="mt-4 md:mt-0 whitespace-nowrap"
-            >
+            <Button className="mt-4 md:mt-0 whitespace-nowrap">
               Get in touch →
             </Button>
           </div>
@@ -285,19 +272,6 @@ export default function ReferEarn() {
           </div>
         </div>
       </footer>
-      {isModalOpen ? (
-        <div>
-          {" "}
-          <ReferModal
-            open={isModalOpen}
-            onOpenChange={() => {
-              console.log("Working");
-            }}
-          />{" "}
-        </div>
-      ) : (
-        <div>false</div>
-      )}
     </div>
   );
 }
