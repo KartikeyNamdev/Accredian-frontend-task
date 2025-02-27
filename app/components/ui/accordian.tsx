@@ -10,10 +10,7 @@ interface AccordionProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
-  (
-    { type = "single", collapsible = false, defaultValue, children, ...props },
-    ref
-  ) => {
+  ({ type = "single", defaultValue, children, ...props }, ref) => {
     const [openItems, setOpenItems] = React.useState<string | string[]>(
       defaultValue || (type === "single" ? "" : [])
     );

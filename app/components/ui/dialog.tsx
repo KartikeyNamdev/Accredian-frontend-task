@@ -7,6 +7,7 @@ interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Dialog = ({ open, onOpenChange, children, ...props }: DialogProps) => {
+  console.log(open, onOpenChange);
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="bg-background/80 backdrop-blur-sm fixed inset-0" />

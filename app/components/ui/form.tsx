@@ -1,30 +1,16 @@
 import * as React from "react";
-import {
-  useForm,
-  FormProvider,
-  UseFormReturn,
-  SubmitHandler,
-} from "react-hook-form";
+import { FormProvider, UseFormReturn, SubmitHandler } from "react-hook-form";
 
 // Define the FormProps interface
-interface FormProps<T extends Record<string, any>> {
+interface FormProps<T extends Record<string>> {
   form: UseFormReturn<T>; // Pass the form object from useForm
-  onSubmit: SubmitHandler<T>; // The submit handler function
+  // The submit handler function
   children: React.ReactNode; // Form content
 }
 
 // Create the Form component
-const Form = <T extends Record<string, any>>({
-  form,
-  onSubmit,
-  children,
-}: FormProps<T>) => {
-  return (
-    <FormProvider {...form}>
-      {/* Only one <form> element here */}
-      {children}
-    </FormProvider>
-  );
+const Form = <T extends Record<string>>({ form, children }: FormProps<T>) => {
+  return <FormProvider {...form}>{children}</FormProvider>;
 };
 
 // Subcomponents

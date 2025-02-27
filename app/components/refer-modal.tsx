@@ -108,8 +108,8 @@ export function ReferModal({ open, onOpenChange }: ReferModalProps) {
             </div>
             <h3 className="text-lg font-semibold">Referral Submitted!</h3>
             <p className="text-sm text-muted-foreground text-center">
-              Thank you for your referral. We'll process it and get in touch
-              with your friend soon.
+              Thank you for your referral. We &apos ll process it and get in
+              touch with your friend soon.
             </p>
           </div>
         ) : (
@@ -161,7 +161,7 @@ export function ReferModal({ open, onOpenChange }: ReferModalProps) {
               </div>
 
               <div className="space-y-4">
-                <h4 className="text-sm font-semibold">Friend's Details</h4>
+                <h4 className="text-sm font-semibold">Friends Details</h4>
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
